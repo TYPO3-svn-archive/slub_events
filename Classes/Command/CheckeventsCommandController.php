@@ -89,6 +89,10 @@ class Tx_SlubEvents_Command_CheckeventsCommandController extends Tx_Extbase_MVC_
 		// TYPO3 doesn't set locales for backend-users --> so do it manually like this...
 		// is needed with strftime
 		setlocale(LC_ALL, 'de_DE.utf8');
+
+		// simulate BE_USER setting to force fluid using the proper translation
+		$GLOBALS['BE_USER']->uc['lang'] = 'de';
+
 	}
 
 	/**
@@ -222,16 +226,16 @@ class Tx_SlubEvents_Command_CheckeventsCommandController extends Tx_Extbase_MVC_
 		}
 
 		echo $cronLog;
-		//~ echo count($allevents);
-		//~ return;
+
+		return;
     }
 
 	/**
-	 * checkForSubscriptionEndCommand
+	 * makeStatisticsReportsCommand
 	 *
 	 * @param int stroagePid
 	 * @param string senderEmailAddress
-	 * @param string receiverEmailAddress
+	 * @param string receiverEmailAddress list of receiver email addresses separated by comma
 	 * @return void
 	*/
     public function makeStatisticsReportsCommand($storagePid, $senderEmailAddress = '', $receiverEmailAddress = '') {
@@ -253,6 +257,8 @@ class Tx_SlubEvents_Command_CheckeventsCommandController extends Tx_Extbase_MVC_
 		if (empty($receiverEmailAddress)) {
 			echo "NO receiverEmailAddress given. Please enter the receiverEmailAddress in the scheduler task.";
 			exit(1);
+		} else {
+			$receiverEmailAddress = explode(', ', $receiverEmailAddress);
 		}
 
 		// set storagePid to point extbase to the right repositories
@@ -265,25 +271,22 @@ class Tx_SlubEvents_Command_CheckeventsCommandController extends Tx_Extbase_MVC_
 
 		// start the work...
 
-
 		// 1. get the categories
-		$categories = $this->categoryRepository->findAllTree();
+		$categories = $this->categoryRepository->findAll();
 		foreach ($categories as $uid => $category)
 					$searchParameter['category'][$uid] = $uid;
-		$categories2 = $this->categoryRepository->findAllByUids($categories);
 
 		// 2. get events of last month
 		$startDateTime = strtotime('first day of last month 00:00:00');
 		$endDateTime = strtotime('last day of last month 23:59:59');
 
 		$allevents = $this->eventRepository->findAllByCategoriesAndDateInterval($searchParameter['category'], $startDateTime, $endDateTime);
-		//~ $allevents = $this->eventRepository->findAllByCategories($categories2);
-		//~ findFreeByCategory
-//~ 	$allevents = $this->eventRepository->findAllSubscriptionEnded();
-		$helper['nameto'] = $receiverEmailAddress;
-		// email to event owner
+		// used to name the csv file...
+		$helper['nameto'] = strftime('%Y%m', $startDateTime);
+
+		// email to all receivers...
 		$out = $this->sendTemplateEmail(
-			array($receiverEmailAddress => ''),
+			$receiverEmailAddress,
 			array($senderEmailAddress => 'SLUB Veranstaltungen - noreply'),
 			'Statistik Report Veranstaltungen: '. ': '. strftime('%x', $startDateTime) . ' - '. strftime('%x', $endDateTime),
 			'Statistics',
@@ -295,6 +298,7 @@ class Tx_SlubEvents_Command_CheckeventsCommandController extends Tx_Extbase_MVC_
 			)
 		);
 
+		return;
 	}
 
 	/**

@@ -1,57 +1,64 @@
-..  Editor configuration
-	...................................................
-	* utf-8 with BOM as encoding
-	* tab indent with 4 characters for code snippet.
-	* optional: soft carriage return preferred.
+﻿.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
 
-.. Includes roles, substitutions, ...
-.. include:: _IncludedDirectives.rst
+.. include:: Includes.txt
 
-=================
-Extension Name
-=================
 
-:Extension name: SLUB: Event Registration
-:Extension key: slub_events
-:Version: 1.0.7
-:Description: manuals covering TYPO3 extension "SLUB: Event Registration"
-:Language: en
-:Author: Alexander Bigga
-:Creation: 2013-06-21
-:Generation: 13:36
-:Licence: Open Content License available from `www.opencontent.org/opl.shtml <http://www.opencontent.org/opl.shtml>`_
+.. _start:
 
-The content of this document is related to TYPO3, a GNU/GPL CMS/Framework available from `www.typo3.org
-<http://www.typo3.org/>`_
+=============================================================
+slub_events
+=============================================================
 
-**Table of Contents**
+.. only:: html
+
+	:Classification:
+		slub_events
+
+	:Version:
+		|release|
+
+	:Language:
+		en
+
+	:Description:
+		slub_events is an extbase/fluid based tool for event
+		registration and experts booking. It is developped and used in
+		production at the Saxony State and University Library (SLUB)
+		Dresden, Germany.
+
+	:Keywords:
+		events, registration
+
+	:Copyright:
+		2013
+
+	:Author:
+		Alexander Bigga (SLUB Dresden)
+
+	:Email:
+		alexander.bigga@slub-dresden.de
+
+	:License:
+		This document is published under the Open Content License
+		available from http://www.opencontent.org/opl.shtml
+
+	:Rendered:
+		|today|
+
+	The content of this document is related to TYPO3,
+	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+
+
+	**Table of Contents**
 
 .. toctree::
-	:maxdepth: 2
+	:maxdepth: 5
+	:titlesonly:
+	:glob:
 
-	ProjectInformation
-	UserManual
-	AdministratorManual
-	TyposcriptReference
-	DeveloperCorner
-	RestructuredtextHelp
-
-.. STILL TO ADD IN THIS DOCUMENT
-	@todo: add section about how screenshots can be automated. Pointer to PhantomJS could be added.
-	@todo: explain how documentation can be rendered locally and remotely.
-	@todo: explain what files should be versionned and what not (_build, Makefile, conf.py, ...)
-
-.. include:: ../Readme.rst
-
-What does it do?
-=================
-
-In this chapter should be given a brief overview of the extension. What does it do? What problem does it solve? Who is interested in this? Basically, this section includes everything people need to know to decide whether they should go on with this extension.
-
-.. figure:: Images/IntroductionPackage.png
-		:width: 500px
-		:alt: Introduction Package
-
-		Introduction Package just after installation (caption of the image)
-
-		How the Frontend of the Introduction Package looks like just after installation (legend of the image)
+	Introduction/Index
+	UsersManual/Index
+	AdministratorManual/Index
