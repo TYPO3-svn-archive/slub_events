@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2014-01-21T10:45:17Z">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2014-02-13T14:38:17Z">
 		<header>
 			<generator>LFEditor</generator>
 		</header>
@@ -33,6 +33,14 @@
 			<source>New Event</source>
 			<target>Neue Veranstaltung anlegen</target>
 		</trans-unit>
+		<trans-unit id="be.searchAllContacts" approved="yes" xml:space="preserve">
+			<source>Select all</source>
+			<target>alle auswählen</target>
+		</trans-unit>
+		<trans-unit id="be.searchContacts" approved="yes" xml:space="preserve">
+			<source>Contacts</source>
+			<target>Ansprechpartner</target>
+		</trans-unit>
 		<trans-unit id="be.searchInTitle" approved="yes" xml:space="preserve">
 			<source>Search in Title</source>
 			<target>Nach Titel suchen</target>
@@ -45,13 +53,17 @@
 			<source>Send ICS Invitation to:</source>
 			<target>Schicke Termineinladung an: </target>
 		</trans-unit>
+		<trans-unit id="be.sendOnlineSurvey" approved="yes" xml:space="preserve">
+			<source>Send Online Survey Request to Subscribers</source>
+			<target>Online-Umfrage an Teilnehmer senden.</target>
+		</trans-unit>
 		<trans-unit id="be.unhideEvent" approved="yes" xml:space="preserve">
 			<source>Unhide Event</source>
 			<target>Aktivieren</target>
 		</trans-unit>
 		<trans-unit id="paginate_back" approved="yes" xml:space="preserve">
-			<source>back</source>
-			<target>zurück</target>
+			<source>Back</source>
+			<target>Zurück</target>
 		</trans-unit>
 		<trans-unit id="paginate_next" approved="yes" xml:space="preserve">
 			<source>Next</source>

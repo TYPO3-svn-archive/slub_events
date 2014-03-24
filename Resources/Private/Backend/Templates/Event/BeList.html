@@ -47,12 +47,16 @@ Otherwise your changes will be overwritten the next time you save the extension 
 				/ {event.maxSubscriber}</td>
 			<td><f:if condition="{event.hidden} == 0"><f:then><f:be.buttons.icon icon="actions-edit-copy" uri="{f:uri.action(action:'beCopy' arguments:'{event:event}')}" title="<f:translate key='be.copyEvent' />" /></f:then></f:if></td>
 			<td><se:be.functionBar icon="hide" event="{event}" /></td>
-			<td><f:link.action action="beIcsInvitation" controller="Subscriber" title="<f:translate key='be.sendIcsInvitationTo' /> {event.contact.name}, {event.contact.email}" arguments="{event : event}"><f:translate key='be.icsInvitation' /></f:link.action></td>
+			<td><f:link.action action="beIcsInvitation" controller="Subscriber" title="<f:translate key='be.sendIcsInvitationTo' /> {event.contact.name}, {event.contact.email}" arguments="{event : event}"><img src='../typo3conf/ext/slub_events/Resources/Public/Icons/fugue-icons/calendar-import.png'></f:link.action></td>
 			<td><f:if condition="{event.onlinesurvey}">
 					<f:then>
 						<f:if condition="<se:condition.IsSubscriptionAllowed event='{event}' />"><f:then></f:then>
 						<f:else>
-							<f:link.action action="beOnlineSurvey" controller="Subscriber" title="<f:translate key='be.sendOnlineSurvey' /> {event.contact.name}, {event.contact.email}" arguments="{event : event}"> --xxx-- </f:link.action>
+							<f:if condition="<f:count subject='{event.subscribers}' />">
+								<f:then>
+									<f:link.action action="beOnlineSurvey" controller="Subscriber" title="<f:translate key='be.sendOnlineSurvey' />" arguments="{event : event}"><img src='../typo3conf/ext/slub_events/Resources/Public/Icons/fugue-icons/mail-send.png'></f:link.action>
+								</f:then>
+							</f:if>
 						</f:else>
 						</f:if>
 					</f:then>
@@ -74,12 +78,12 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <f:form action="beList" section="results" name="searchParameter" method="post">
 <table class="tx_slubevents" >
 	<tr>
-		<th><label for="selectedStartDateStamp">
+		<th><label for="tceforms-datefield-1">
 				<f:translate key="tx_slubevents_domain_model_event.start_date_time" />
 			</label>
 		</th>
 		<th><f:translate key="tx_slubevents_domain_model_category" /></th>
-		<th></th>
+		<th><label for="field-contact-search"><f:translate key="be.searchContacts" /></label></th>
 	</tr>
 	<tr>
 		<td class="td-input">
@@ -90,6 +94,11 @@ Otherwise your changes will be overwritten the next time you save the extension 
 			<f:render partial="Event/CategoryTree" arguments="{categories: categories, categoriesSelected : categoriesSelected}" />
 		</td>
 		<td>
+			<label for="category-{category.item.uid}" title="{category.item.uid}">{category.item.title}</label>
+			<se:be.checkbox id="checkbox-all-contacts" name="checkbox-all-contacts" value="1" onclick="checkBoxContacts(this)" />
+			<label for="checkbox-all-contacts"><f:translate key="be.searchAllContacts" /></label>
+			<p>&nbsp;</p>
+			<f:form.select id="field-contact-search" class="" property="contacts" options="{contacts}" optionValueField="uid" optionLabelField="name" multiple="1" size="15" value="{contactsSelected}" />
 		</td>
 	</tr>
 
@@ -104,6 +113,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 		<th>
 		</th>
 	</tr>
+
 	<tr>
 		<td class="td-input">
 				<f:form.textfield class="" property="searchString" placeholder="<f:translate key='be.searchInTitle' />" value="{searchString}" />
@@ -113,6 +123,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 		<td>
 		</td>
 	</tr>
+
 	<tr>
 		<td colspan="2" id="results">
 			<f:form.submit value="Suchen..." />
@@ -120,15 +131,19 @@ Otherwise your changes will be overwritten the next time you save the extension 
 	</tr>
 </f:form>
 
-<f:if condition="{settings.hidePagination}">
+<f:if condition="{events}">
 	<f:then>
-		<f:render section="eventListing" arguments="{events: events}" />
+		<f:if condition="{settings.hidePagination}">
+			<f:then>
+				<f:render section="eventListing" arguments="{events: events}" />
+			</f:then>
+			<f:else>
+				<f:widget.paginate objects="{events}" as="paginatedEvents" configuration="{settings.list.paginate}">
+					<f:render section="eventListing" arguments="{events: paginatedEvents}" />
+				</f:widget.paginate>
+			</f:else>
+		</f:if>
 	</f:then>
-	<f:else>
-		<f:widget.paginate objects="{events}" as="paginatedEvents" configuration="{settings.list.paginate}">
-			<f:render section="eventListing" arguments="{events: paginatedEvents}" />
-		</f:widget.paginate>
-	</f:else>
 </f:if>
 
 </div>

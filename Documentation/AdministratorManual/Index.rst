@@ -40,8 +40,22 @@ For example:
    Default
          empty
 
-[tsref:plugin.tx_slubevents.persistence]
+.. container:: table-row
 
+   Property
+         hidePagination
+
+   Data type
+         boolean
+
+   Description
+         In list view (backend module and frontend plugin) a pagination
+         is shown by default. If you want to suppress this pagination for some reason set this option to TRUE
+
+   Default
+         0: show pagination
+
+[tsref:plugin.tx_slubevents.persistence]
 [tsref:module.tx_slubevents.persistence]
 
 
@@ -78,6 +92,22 @@ Configure Email Handling
 
    Default
          1 = Always send mails.
+
+.. container:: table-row
+
+   Property
+         emailToContact.sendEmailOnFreeAgain
+
+   Data type
+         boolean
+
+   Description
+         In case of cancellation by a customer, an email is sent to the
+         contact person if the minimum number of subscribers is not
+         reached anymore. The event is not guaranteed anymore.
+
+   Default
+         1 = Send mails to contact person in case of cancellation by customer.
 
 .. container:: table-row
 

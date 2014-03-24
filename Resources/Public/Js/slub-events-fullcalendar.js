@@ -1,4 +1,4 @@
-function checkBoxes(objThis){
+function checkBoxes(objThis) {
   // Checkbox selected? (true/false)
   var blnChecked = objThis.checked;
   // parent node
@@ -19,7 +19,6 @@ function checkBoxes(objThis){
     }
   }
 }
-
 
 $(document).ready(function() {
 
@@ -100,7 +99,10 @@ $(document).ready(function() {
     },
 
     loading: function(bool) {
-      if (bool) $('#loading').show();
+	  if (bool) {
+		$('#loading').show();
+
+	  }
       else {
 		$('#loading').hide();
 		}

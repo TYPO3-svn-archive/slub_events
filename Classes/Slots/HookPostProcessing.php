@@ -34,6 +34,9 @@ class Tx_SlubEvents_Slots_HookPostProcessing {
 	 * Clear cache of all pages with slubevents_eventlist plugin
 	 * This way the plugin may stay cached but on every delete or insert of subscribers, the cache gets cleared.
 	 *
+	 * @param       int			the PID of the storage folder
+	 * @param       boolean		set TRUE if this is a genius bar event
+	 *
 	 * @return
 	 */
 	function clearAllEventListCache($pid = 0, $isGeniusBar = 0) {
@@ -51,37 +54,16 @@ class Tx_SlubEvents_Slots_HookPostProcessing {
 
 		return;
 
-		global $GLOBALS;
-
-		$select = 'DISTINCT pages.uid';
-		$table = 'tt_content, pages';
-		$query = 'list_type IN(\'slubevents_eventlist\', \'slubevents_eventgeniusbar\') AND pages.uid = tt_content.pid';
-		$query .= ' AND tt_content.hidden = 0 AND pages.hidden = 0';
-		$query .= ' AND tt_content.deleted = 0 AND pages.deleted = 0';
-
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select, $table ,$query);
-
-		$tcemain = t3lib_div::makeInstance('t3lib_TCEmain');
-
-		// next two lines are necessary... don't know why.
-		$tcemain->stripslashes_values = 0;
-		$tcemain->start(array(), array());
-
-		while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
-			$tcemain->clear_cacheCmd($row['uid']);
-		};
-
-		return;
 	}
 
 	/**
 	 * Clear ajax cache files for fullcalendar
 	 *
+	 * @param       timestamp		the startDate as unix timestamp
+	 *
 	 * @return
 	 */
 	function clearAjaxCacheFiles($startDate = NULL) {
-
-		global $GLOBALS;
 
 		$dir    = PATH_site.'typo3temp/tx_slubevents/';
 		if ($startDate === NULL)
@@ -146,9 +128,6 @@ class Tx_SlubEvents_Slots_HookPostProcessing {
 			// but at least I get the start_date_time so I will delete all cached files around this
 			// start_date_tim
 			$this->clearAjaxCacheFiles($pObj->checkValue_currentRecord['start_date_time']);
-
-
 		}
 	}
-
 }
